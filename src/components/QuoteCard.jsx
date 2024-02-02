@@ -24,7 +24,7 @@ class QuoteCard extends Component {
         >
           <div className="quote-details">
             <h1>{character}</h1>
-            <p>{quote}</p>
+            <p>"{quote}"</p>
             <div className="buttons">
               <button onClick={() => onLikeClick(id)}>
                 {liked ? "Unlike" : "Like"}
@@ -49,7 +49,7 @@ class QuoteCard extends Component {
         </div>
         <div className="quote-details">
           <h1>{character}</h1>
-          <p>{quote}</p>
+          <p>"{quote}"</p>
           <div className="buttons">
             <button onClick={() => onLikeClick(id)}>
               {liked ? "Unlike" : "Like"}

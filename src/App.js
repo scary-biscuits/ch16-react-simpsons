@@ -77,9 +77,18 @@ class App extends Component {
           />
 
           <button onClick={this.onSearchClick}>Filter</button>
+          <button onClick={this.getApiData}>Reset</button>
         </div>
         <div>
-          <h2>You liked {this.state.numLiked} pearls of wisdom!</h2>
+          <h2 style={{ display: this.state.numLiked ? "initial" : "none" }}>
+            You liked {this.state.numLiked} pearl
+            <span
+              style={{ display: this.state.numLiked > 1 ? "initial" : "none" }}
+            >
+              s
+            </span>{" "}
+            of wisdom!
+          </h2>
         </div>
         <Quotes
           quotes={this.state.simpsons}
