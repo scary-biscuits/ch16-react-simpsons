@@ -28,7 +28,17 @@ class App extends Component {
   };
 
   onBtnClick = () => {
-    console.log(this.state.search);
+    const searchTerm = this.state.search.toLowerCase();
+    const quotes = [...this.state.simpsons];
+    const searchResults = [];
+
+    for (let i = 0; i < quotes.length; i++) {
+      let test = quotes[i].character.toLowerCase();
+      if (test.includes(searchTerm)) {
+        searchResults.push(quotes[i]);
+      }
+      this.setState({ simpsons: searchResults });
+    }
   };
 
   componentDidMount() {
@@ -57,6 +67,7 @@ class App extends Component {
           searchTerm={this.state.search}
           onDeleteItem={this.onDeleteItem}
           onBtnClick={this.onBtnClick}
+          getApiData={this.getApiData}
         />
         ;
       </div>

@@ -12,7 +12,6 @@ class Quotes extends Component {
           onDeleteItem={this.props.onDeleteItem}
           onBtnClick={this.props.onBtnClick}
           id={item.id}
-          searchTerm={this.props.searchTerm}
         />
       );
     });
