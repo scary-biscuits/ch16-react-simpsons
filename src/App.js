@@ -76,7 +76,7 @@ class App extends Component {
             id="search"
           />
 
-          <button onClick={this.onSearchClick}>Search</button>
+          <button onClick={this.onSearchClick}>Filter</button>
         </div>
         <div>
           <h2>You liked {this.state.numLiked} pearls of wisdom!</h2>

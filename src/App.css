@@ -7,28 +7,64 @@ html {
 
 body {
   background-color: #1b1b1b;
-  font-family: Baloo, Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 100;
   color: #ffffff;
   padding: 20px;
 }
 
+h1 {
+  font-size: 3.7rem;
+}
+
+p {
+  font-size: 1.5rem;
+  font-weight: 100;
+}
+
+input {
+  height: 30px;
+  width: 500px;
+  border-radius: 20px;
+}
+
 .container {
   display: flex;
   flex-direction: column;
+  gap: 20px;
   align-items: center;
   width: 100%;
 }
 
 .card {
-  padding: 10px;
+  padding: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 60%;
+  border-radius: 20px;
+}
+
+.quote-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.buttons {
+  display: flex;
 }
 
 img {
   height: 300px;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  src: url("./fonts/montserrat-v26-latin-600.woff2") format("woff2");
 }
