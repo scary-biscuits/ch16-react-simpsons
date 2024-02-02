@@ -10,7 +10,7 @@ class Quotes extends Component {
         <QuoteCard
           {...item}
           onDeleteItem={this.props.onDeleteItem}
-          onBtnClick={this.props.onBtnClick}
+          onLikeClick={this.props.onLikeClick}
           id={item.id}
         />
       );

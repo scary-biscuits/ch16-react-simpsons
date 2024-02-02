@@ -4,7 +4,7 @@ import Quotes from "./components/Quotes";
 import "./App.css";
 
 class App extends Component {
-  state = { search: "" };
+  state = { search: "", numLiked: 0 };
 
   getApiData = async () => {
     const { data } = await axios.get(
@@ -12,6 +12,7 @@ class App extends Component {
     );
     for (let i = 0; i < data.length; i++) {
       data[i].id = i;
+      data[i].liked = false;
     }
     this.setState({ simpsons: data });
   };
@@ -27,7 +28,7 @@ class App extends Component {
     this.setState({ search: e.target.value });
   };
 
-  onBtnClick = () => {
+  onSearchClick = () => {
     const searchTerm = this.state.search.toLowerCase();
     const quotes = [...this.state.simpsons];
     const searchResults = [];
@@ -37,14 +38,29 @@ class App extends Component {
       if (test.includes(searchTerm)) {
         searchResults.push(quotes[i]);
       }
-      this.setState({ simpsons: searchResults });
     }
+    this.setState({ simpsons: searchResults });
+  };
+
+  onLikeClick = (id) => {
+    const quotes = [...this.state.simpsons];
+    const likedQuotes = [];
+    quotes[id].liked = !quotes[id].liked;
+    quotes.forEach((item) => {
+      if (item.liked) {
+        likedQuotes.push(item);
+      }
+    });
+    let numLiked = likedQuotes.length;
+    this.setState({ numLiked });
   };
 
   componentDidMount() {
     this.getApiData();
   }
+
   render() {
+    console.log(this.state.numLiked);
     if (!this.state.simpsons) {
       return <p>Loading...</p>;
     }
@@ -60,14 +76,17 @@ class App extends Component {
             id="search"
           />
 
-          <button onClick={this.onBtnClick}>Search</button>
+          <button onClick={this.onSearchClick}>Search</button>
+        </div>
+        <div>
+          <h2>You liked {this.state.numLiked} pearls of wisdom!</h2>
         </div>
         <Quotes
           quotes={this.state.simpsons}
           searchTerm={this.state.search}
           onDeleteItem={this.onDeleteItem}
-          onBtnClick={this.onBtnClick}
-          getApiData={this.getApiData}
+          onSeachClick={this.onSearchClick}
+          onLikeClick={this.onLikeClick}
         />
         ;
       </div>
