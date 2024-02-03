@@ -57,13 +57,20 @@ class App extends Component {
       }
     });
     let numLiked = likedQuotes.length;
-    this.setState({ numLiked });
+    this.setState({ numLiked, likedQuotes });
   };
 
   onSortClick = () => {
     const quotes = [...this.state.simpsons];
     quotes.reverse();
     this.setState({ simpsons: quotes });
+  };
+
+  onToggleLikedClick = () => {
+    const quotes = [...this.state.simpsons];
+    const likedQuotes = [...this.state.likedQuotes];
+
+    this.setState({ simpsons: likedQuotes });
   };
 
   componentDidMount() {
@@ -83,6 +90,7 @@ class App extends Component {
           onSearchClick={this.onSearchClick}
           getApiData={this.getApiData}
           onSortClick={this.onSortClick}
+          onToggleLikedClick={this.onToggleLikedClick}
         />
         <Liked numLiked={this.state.numLiked} />
         <Quotes
@@ -90,7 +98,6 @@ class App extends Component {
           onDeleteItem={this.onDeleteItem}
           onLikeClick={this.onLikeClick}
         />
-        ;
       </div>
     );
   }

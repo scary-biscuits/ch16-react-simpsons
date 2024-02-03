@@ -15,6 +15,7 @@ class Search extends Component {
           <button onClick={this.props.onSearchClick}>Filter</button>
           <button onClick={this.props.getApiData}>Reset</button>
           <button onClick={this.props.onSortClick}>Reverse</button>
+          <button onClick={this.props.onToggleLikedClick}>Liked</button>
         </div>
       </div>
     );
