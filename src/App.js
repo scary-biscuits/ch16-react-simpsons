@@ -45,7 +45,9 @@ class App extends Component {
   onLikeClick = (id) => {
     const quotes = [...this.state.simpsons];
     const likedQuotes = [];
-    quotes[id].liked = !quotes[id].liked;
+    const index = quotes.findIndex((item) => item.id === id);
+
+    quotes[index].liked = !quotes[index].liked; //this is where the bug is!
     quotes.forEach((item) => {
       if (item.liked) {
         likedQuotes.push(item);
@@ -53,6 +55,12 @@ class App extends Component {
     });
     let numLiked = likedQuotes.length;
     this.setState({ numLiked });
+  };
+
+  onSortClick = () => {
+    const quotes = [...this.state.simpsons];
+    quotes.reverse();
+    this.setState({ simpsons: quotes });
   };
 
   componentDidMount() {
@@ -78,6 +86,7 @@ class App extends Component {
 
           <button onClick={this.onSearchClick}>Filter</button>
           <button onClick={this.getApiData}>Reset</button>
+          <button onClick={this.onSortClick}>Reverse Order</button>
         </div>
         <div>
           <h2 style={{ display: this.state.numLiked ? "initial" : "none" }}>
@@ -94,7 +103,7 @@ class App extends Component {
           quotes={this.state.simpsons}
           searchTerm={this.state.search}
           onDeleteItem={this.onDeleteItem}
-          onSeachClick={this.onSearchClick}
+          onSearchClick={this.onSearchClick}
           onLikeClick={this.onLikeClick}
         />
         ;
