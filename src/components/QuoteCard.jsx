@@ -23,16 +23,22 @@ class QuoteCard extends Component {
           style={{ backgroundColor: liked ? "palevioletred" : "steelblue" }}
         >
           <div className="quote-details">
-            <h1>{character}</h1>
-            <p>"{quote}"</p>
+            <h2>"{quote}"</h2>
+            <p>&mdash; {character}</p>
             <div className="buttons">
-              <button onClick={() => onLikeClick(id)}>
+              <button
+                style={{
+                  backgroundColor: liked ? "#1b1b1b" : "#ffd90f",
+                  color: liked ? "#ff6d90" : "initial",
+                }}
+                onClick={() => onLikeClick(id)}
+              >
                 {liked ? "Unlike" : "Like"}
               </button>
               <button onClick={() => onDeleteItem(id)}>Delete</button>
             </div>
           </div>
-          <div>
+          <div className="character-img">
             <img src={image} alt={character} />
           </div>
         </div>
@@ -48,10 +54,16 @@ class QuoteCard extends Component {
           <img src={image} alt={character} />
         </div>
         <div className="quote-details">
-          <h1>{character}</h1>
-          <p>"{quote}"</p>
+          <h2>"{quote}"</h2>
+          <p>&mdash; {character}</p>
           <div className="buttons">
-            <button onClick={() => onLikeClick(id)}>
+            <button
+              style={{
+                backgroundColor: liked ? "#1b1b1b" : "#ffd90f",
+                color: liked ? "#ff6d90" : "initial",
+              }}
+              onClick={() => onLikeClick(id)}
+            >
               {liked ? "Unlike" : "Like"}
             </button>
             <button onClick={() => onDeleteItem(id)}>Delete</button>

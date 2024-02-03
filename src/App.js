@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Spinner from "./components/Spinner";
+import Search from "./components/Search";
 import Quotes from "./components/Quotes";
 import "./App.css";
+import Liked from "./components/Liked";
 
 class App extends Component {
   state = { search: "", numLiked: 0 };
@@ -47,7 +50,7 @@ class App extends Component {
     const likedQuotes = [];
     const index = quotes.findIndex((item) => item.id === id);
 
-    quotes[index].liked = !quotes[index].liked; //this is where the bug is!
+    quotes[index].liked = !quotes[index].liked;
     quotes.forEach((item) => {
       if (item.liked) {
         likedQuotes.push(item);
@@ -70,40 +73,21 @@ class App extends Component {
   render() {
     console.log(this.state.numLiked);
     if (!this.state.simpsons) {
-      return <p>Loading...</p>;
+      return <Spinner />;
     }
     return (
       <div className="container">
-        <h1>Springfield Wisdom</h1>
-        <div className="search">
-          <input
-            type="text"
-            onInput={this.onSearchInput}
-            placeholder="Enter a Springfield resident..."
-            name="search"
-            id="search"
-          />
-
-          <button onClick={this.onSearchClick}>Filter</button>
-          <button onClick={this.getApiData}>Reset</button>
-          <button onClick={this.onSortClick}>Reverse Order</button>
-        </div>
-        <div>
-          <h2 style={{ display: this.state.numLiked ? "initial" : "none" }}>
-            You liked {this.state.numLiked} pearl
-            <span
-              style={{ display: this.state.numLiked > 1 ? "initial" : "none" }}
-            >
-              s
-            </span>{" "}
-            of wisdom!
-          </h2>
-        </div>
+        <h1>Everything's coming up Milhouse!</h1>
+        <Search
+          onSearchInput={this.onSearchInput}
+          onSearchClick={this.onSearchClick}
+          getApiData={this.getApiData}
+          onSortClick={this.onSortClick}
+        />
+        <Liked numLiked={this.state.numLiked} />
         <Quotes
           quotes={this.state.simpsons}
-          searchTerm={this.state.search}
           onDeleteItem={this.onDeleteItem}
-          onSearchClick={this.onSearchClick}
           onLikeClick={this.onLikeClick}
         />
         ;
