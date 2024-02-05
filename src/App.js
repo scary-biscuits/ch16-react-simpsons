@@ -72,19 +72,20 @@ class App extends Component {
     const likedQuotes = [...this.state.likedQuotes];
 
     //count number of cards displayed
-    let counter = 0;
-    for (let i = 0; i < quotes.length; i++) {
-      if (quotes[i].display) counter++;
-    }
+
     if (!likedQuotes) {
     } else {
+      // let counter = 0;
+      // for (let i = 0; i < quotes.length; i++) {
+      //   if (quotes[i].display) counter++;
+
       //if there are more displayed than liked, only display the liked ones. otherwise show everything
-      if (counter > likedQuotes.length) {
+      if (quotes.find((item) => item.liked && !item.display)) {
         quotes.forEach((item) => {
-          if (item.liked) {
-            item.display = true;
-          } else {
+          if (!item.liked) {
             item.display = false;
+          } else {
+            item.display = true;
           }
         });
       } else {
