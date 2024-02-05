@@ -12,13 +12,12 @@ class QuoteCard extends Component {
       characterDirection,
       onLikeClick,
       liked,
+      display,
     } = this.props;
-    console.log(this.props);
-
     if (characterDirection === "Right") {
       return (
         <div
-          className="card right"
+          className={`card right ${display ? "display" : "hide"}`}
           key={id}
           style={{ backgroundColor: liked ? "palevioletred" : "steelblue" }}
         >
@@ -46,7 +45,7 @@ class QuoteCard extends Component {
     }
     return (
       <div
-        className="card left"
+        className={`card left ${display ? "display" : "hide"}`}
         key={id}
         style={{ backgroundColor: liked ? "palevioletred" : "steelblue" }}
       >

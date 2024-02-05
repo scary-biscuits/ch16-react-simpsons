@@ -11,7 +11,8 @@ class Quotes extends Component {
           {...item}
           onDeleteItem={this.props.onDeleteItem}
           onLikeClick={this.props.onLikeClick}
-          id={item.id}
+          // id={item.id}
+          // display={item.display}
         />
       );
     });

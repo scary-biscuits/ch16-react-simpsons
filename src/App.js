@@ -16,6 +16,7 @@ class App extends Component {
     for (let i = 0; i < data.length; i++) {
       data[i].id = i;
       data[i].liked = false;
+      data[i].display = true;
     }
     this.setState({ simpsons: data });
   };
@@ -34,15 +35,15 @@ class App extends Component {
   onSearchClick = () => {
     const searchTerm = this.state.search.toLowerCase();
     const quotes = [...this.state.simpsons];
-    const searchResults = [];
 
     for (let i = 0; i < quotes.length; i++) {
       let test = quotes[i].character.toLowerCase();
-      if (test.includes(searchTerm)) {
-        searchResults.push(quotes[i]);
+      quotes[i].display = true;
+      if (!test.includes(searchTerm)) {
+        quotes[i].display = false;
       }
     }
-    this.setState({ simpsons: searchResults });
+    this.setState({ simpsons: quotes });
   };
 
   onLikeClick = (id) => {
@@ -70,7 +71,30 @@ class App extends Component {
     const quotes = [...this.state.simpsons];
     const likedQuotes = [...this.state.likedQuotes];
 
-    this.setState({ simpsons: likedQuotes });
+    //count number of cards displayed
+    let counter = 0;
+    for (let i = 0; i < quotes.length; i++) {
+      if (quotes[i].display) counter++;
+    }
+    if (!likedQuotes) {
+    } else {
+      //if there are more displayed than liked, only display the liked ones. otherwise show everything
+      if (counter > likedQuotes.length) {
+        quotes.forEach((item) => {
+          if (item.liked) {
+            item.display = true;
+          } else {
+            item.display = false;
+          }
+        });
+      } else {
+        quotes.forEach((item) => {
+          item.display = true;
+        });
+      }
+    }
+
+    this.setState({ simpsons: quotes });
   };
 
   componentDidMount() {
@@ -78,7 +102,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.numLiked);
     if (!this.state.simpsons) {
       return <Spinner />;
     }

@@ -70,6 +70,10 @@ input {
   gap: 5px;
 }
 
+.hide {
+  display: none;
+}
+
 .quote-details {
   display: flex;
   flex-direction: column;
