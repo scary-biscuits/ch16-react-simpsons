@@ -7,7 +7,7 @@ import "./App.css";
 import Liked from "./components/Liked";
 
 class App extends Component {
-  state = { search: "", numLiked: 0 };
+  state = { search: "", numLiked: 0, likedQuotes: [] };
 
   getApiData = async () => {
     const { data } = await axios.get(
@@ -71,16 +71,9 @@ class App extends Component {
     const quotes = [...this.state.simpsons];
     const likedQuotes = [...this.state.likedQuotes];
 
-    //count number of cards displayed
-
     if (!likedQuotes) {
     } else {
-      // let counter = 0;
-      // for (let i = 0; i < quotes.length; i++) {
-      //   if (quotes[i].display) counter++;
-
-      //if there are more displayed than liked, only display the liked ones. otherwise show everything
-      if (quotes.find((item) => item.liked && !item.display)) {
+      if (quotes.find((item) => item.display && !item.liked)) {
         quotes.forEach((item) => {
           if (!item.liked) {
             item.display = false;
