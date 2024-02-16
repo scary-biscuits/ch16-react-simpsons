@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from "./components/Spinner";
 import Search from "./components/Search";
@@ -6,10 +6,13 @@ import Quotes from "./components/Quotes";
 import "./App.css";
 import Liked from "./components/Liked";
 
-class App extends Component {
-  state = { search: "", numLiked: 0, likedQuotes: [] };
+const App = () => {
+  const [search, setSearch] = useState("");
+  const [numLiked, setNumLiked] = useState(0);
+  const [liked, setLiked] = useState([]);
+  const [simpsons, setSimpsons] = useState();
 
-  getApiData = async () => {
+  const getApiData = async () => {
     const { data } = await axios.get(
       `https://thesimpsonsquoteapi.glitch.me/quotes?count=50`
     );
@@ -18,23 +21,31 @@ class App extends Component {
       data[i].liked = false;
       data[i].display = true;
     }
-    this.setState({ simpsons: data });
+    setSimpsons(data);
   };
 
-  onDeleteItem = (id) => {
-    const quotes = [...this.state.simpsons];
+  useEffect(
+    () => {
+      getApiData();
+    },
+    [] // means run once
+  );
+
+  const onDeleteItem = (id) => {
+    const quotes = [...simpsons];
     const index = quotes.findIndex((item) => item.id === id);
     quotes.splice(index, 1);
-    this.setState({ simpsons: quotes });
+    setSimpsons(quotes);
   };
 
-  onSearchInput = (e) => {
-    this.setState({ search: e.target.value });
+  const onSearchInput = (e) => {
+    setSearch(e.target.value);
+    // store ("search", e.target.value);
   };
 
-  onSearchClick = () => {
-    const searchTerm = this.state.search.toLowerCase();
-    const quotes = [...this.state.simpsons];
+  const onSearchClick = () => {
+    const searchTerm = search.toLowerCase();
+    const quotes = [...simpsons];
 
     for (let i = 0; i < quotes.length; i++) {
       let test = quotes[i].character.toLowerCase();
@@ -43,11 +54,11 @@ class App extends Component {
         quotes[i].display = false;
       }
     }
-    this.setState({ simpsons: quotes });
+    setSimpsons(quotes);
   };
 
-  onLikeClick = (id) => {
-    const quotes = [...this.state.simpsons];
+  const onLikeClick = (id) => {
+    const quotes = [...simpsons];
     const likedQuotes = [];
     const index = quotes.findIndex((item) => item.id === id);
 
@@ -58,18 +69,19 @@ class App extends Component {
       }
     });
     let numLiked = likedQuotes.length;
-    this.setState({ numLiked, likedQuotes });
+    setNumLiked(numLiked);
+    setLiked(likedQuotes);
   };
 
-  onSortClick = () => {
-    const quotes = [...this.state.simpsons];
+  const onSortClick = () => {
+    const quotes = [...simpsons];
     quotes.reverse();
-    this.setState({ simpsons: quotes });
+    setSimpsons(quotes);
   };
 
-  onToggleLikedClick = () => {
-    const quotes = [...this.state.simpsons];
-    const likedQuotes = [...this.state.likedQuotes];
+  const onToggleLikedClick = () => {
+    const quotes = [...simpsons];
+    const likedQuotes = [...liked];
 
     if (!likedQuotes) {
     } else {
@@ -88,36 +100,30 @@ class App extends Component {
       }
     }
 
-    this.setState({ simpsons: quotes });
+    setSimpsons(quotes);
   };
 
-  componentDidMount() {
-    this.getApiData();
+  if (!simpsons) {
+    return <Spinner />;
   }
-
-  render() {
-    if (!this.state.simpsons) {
-      return <Spinner />;
-    }
-    return (
-      <div className="container">
-        <h1>Everything's coming up Milhouse!</h1>
-        <Search
-          onSearchInput={this.onSearchInput}
-          onSearchClick={this.onSearchClick}
-          getApiData={this.getApiData}
-          onSortClick={this.onSortClick}
-          onToggleLikedClick={this.onToggleLikedClick}
-        />
-        <Liked numLiked={this.state.numLiked} />
-        <Quotes
-          quotes={this.state.simpsons}
-          onDeleteItem={this.onDeleteItem}
-          onLikeClick={this.onLikeClick}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="container">
+      <h1>Everything's coming up Milhouse!</h1>
+      <Search
+        onSearchInput={onSearchInput}
+        onSearchClick={onSearchClick}
+        getApiData={getApiData}
+        onSortClick={onSortClick}
+        onToggleLikedClick={onToggleLikedClick}
+      />
+      <Liked numLiked={numLiked} />
+      <Quotes
+        quotes={simpsons}
+        onDeleteItem={onDeleteItem}
+        onLikeClick={onLikeClick}
+      />
+    </div>
+  );
+};
 
 export default App;

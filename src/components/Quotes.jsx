@@ -1,22 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import QuoteCard from "./QuoteCard";
 
-class Quotes extends Component {
-  state = {};
-
-  render() {
-    return this.props.quotes.map((item) => {
-      return (
-        <QuoteCard
-          {...item}
-          onDeleteItem={this.props.onDeleteItem}
-          onLikeClick={this.props.onLikeClick}
-          // id={item.id}
-          // display={item.display}
-        />
-      );
-    });
-  }
-}
+const Quotes = (props) => {
+  console.log(props);
+  return props.quotes.map((item) => {
+    return (
+      <QuoteCard
+        {...item}
+        onDeleteItem={props.onDeleteItem}
+        onLikeClick={props.onLikeClick}
+      />
+    );
+  });
+};
 
 export default Quotes;
