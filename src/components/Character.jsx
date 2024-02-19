@@ -12,7 +12,6 @@ const Character = (props) => {
 
   const characterQuotes = (char) => {
     const quotes = [...props.simpsons];
-    console.log(quotes);
     const characterQuotes = [];
 
     quotes.forEach((item) => {
@@ -22,7 +21,6 @@ const Character = (props) => {
       }
     });
 
-    console.log(characterQuotes);
     return characterQuotes;
   };
 
