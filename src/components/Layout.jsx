@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Spinner from "./components/Spinner";
-import Search from "./components/Search";
-import Quotes from "./components/Quotes";
-import "./App.css";
-import Liked from "./components/Liked";
+import Spinner from "./Spinner";
+import Search from "./Search";
+import Quotes from "./Quotes";
+import "../App.css";
+import Liked from "./Liked";
 import Joi from "joi";
-import Errors from "./components/Errors";
+import Errors from "./Errors";
 
 const Home = (props) => {
   const [search, setSearch] = useState("");

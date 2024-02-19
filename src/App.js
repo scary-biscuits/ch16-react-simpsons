@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Spinner from "./components/Spinner";
-import Home from "./Home";
+import Layout from "./components/Layout";
 import Character from "./components/Character";
 
 import "./App.css";
@@ -60,7 +60,7 @@ const App = () => {
       <Route
         path="/"
         element={
-          <Home
+          <Layout
             simpsons={simpsons}
             liked={liked}
             numLiked={numLiked}
