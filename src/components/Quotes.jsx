@@ -2,7 +2,6 @@ import React from "react";
 import QuoteCard from "./QuoteCard";
 
 const Quotes = (props) => {
-  console.log(props);
   return props.quotes.map((item) => {
     return (
       <QuoteCard

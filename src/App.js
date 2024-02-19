@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Spinner from "./components/Spinner";
-import Search from "./components/Search";
-import Quotes from "./components/Quotes";
+import Home from "./Home";
+import Character from "./components/Character";
+
 import "./App.css";
-import Liked from "./components/Liked";
+import axios from "axios";
+import { Route, Routes } from "react-router-dom";
+import NotFound from "./components/NotFound";
 
 const App = () => {
-  const [search, setSearch] = useState("");
+  const [simpsons, setSimpsons] = useState([]);
   const [numLiked, setNumLiked] = useState(0);
   const [liked, setLiked] = useState([]);
-  const [simpsons, setSimpsons] = useState();
 
   const getApiData = async () => {
     const { data } = await axios.get(
@@ -24,36 +25,14 @@ const App = () => {
     setSimpsons(data);
   };
 
-  useEffect(
-    () => {
-      getApiData();
-    },
-    [] // means run once
-  );
+  useEffect(() => {
+    getApiData();
+  }, []);
 
   const onDeleteItem = (id) => {
     const quotes = [...simpsons];
     const index = quotes.findIndex((item) => item.id === id);
     quotes.splice(index, 1);
-    setSimpsons(quotes);
-  };
-
-  const onSearchInput = (e) => {
-    setSearch(e.target.value);
-    // store ("search", e.target.value);
-  };
-
-  const onSearchClick = () => {
-    const searchTerm = search.toLowerCase();
-    const quotes = [...simpsons];
-
-    for (let i = 0; i < quotes.length; i++) {
-      let test = quotes[i].character.toLowerCase();
-      quotes[i].display = true;
-      if (!test.includes(searchTerm)) {
-        quotes[i].display = false;
-      }
-    }
     setSimpsons(quotes);
   };
 
@@ -73,56 +52,37 @@ const App = () => {
     setLiked(likedQuotes);
   };
 
-  const onSortClick = () => {
-    const quotes = [...simpsons];
-    quotes.reverse();
-    setSimpsons(quotes);
-  };
-
-  const onToggleLikedClick = () => {
-    const quotes = [...simpsons];
-    const likedQuotes = [...liked];
-
-    if (!likedQuotes) {
-    } else {
-      if (quotes.find((item) => item.display && !item.liked)) {
-        quotes.forEach((item) => {
-          if (!item.liked) {
-            item.display = false;
-          } else {
-            item.display = true;
-          }
-        });
-      } else {
-        quotes.forEach((item) => {
-          item.display = true;
-        });
-      }
-    }
-
-    setSimpsons(quotes);
-  };
-
   if (!simpsons) {
     return <Spinner />;
   }
   return (
-    <div className="container">
-      <h1>Everything's coming up Milhouse!</h1>
-      <Search
-        onSearchInput={onSearchInput}
-        onSearchClick={onSearchClick}
-        getApiData={getApiData}
-        onSortClick={onSortClick}
-        onToggleLikedClick={onToggleLikedClick}
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Home
+            simpsons={simpsons}
+            liked={liked}
+            numLiked={numLiked}
+            setSimpsons={setSimpsons}
+            getApiData={getApiData}
+            onDeleteItem={onDeleteItem}
+            onLikeClick={onLikeClick}
+          />
+        }
       />
-      <Liked numLiked={numLiked} />
-      <Quotes
-        quotes={simpsons}
-        onDeleteItem={onDeleteItem}
-        onLikeClick={onLikeClick}
+      <Route
+        path="/:name"
+        element={
+          <Character
+            simpsons={simpsons}
+            onDeleteItem={onDeleteItem}
+            onLikeClick={onLikeClick}
+          />
+        }
       />
-    </div>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 
