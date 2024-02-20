@@ -8,8 +8,6 @@ const Character = (props) => {
   const [character, setCharacter] = useState([]);
   const { name } = useParams();
 
-  // console.log(props);
-
   const characterQuotes = (char) => {
     const quotes = [...props.simpsons];
     const characterQuotes = [];

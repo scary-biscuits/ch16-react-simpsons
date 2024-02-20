@@ -7,7 +7,7 @@ import Liked from "./Liked";
 import Joi from "joi";
 import Errors from "./Errors";
 
-const Home = (props) => {
+const Layout = (props) => {
   const [search, setSearch] = useState("");
   const [errors, setErrors] = useState();
   const { simpsons, setSimpsons, getApiData, liked, numLiked } = props;
@@ -106,4 +106,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default Layout;

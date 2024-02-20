@@ -1,4 +1,6 @@
 import React from "react";
+import QuoteImage from "./QuoteImage";
+import QuoteDetails from "./QuoteDetails";
 
 const QuoteCard = (props) => {
   const {
@@ -20,25 +22,13 @@ const QuoteCard = (props) => {
         key={id}
         style={{ backgroundColor: liked ? "palevioletred" : "steelblue" }}
       >
-        <div className="quote-details">
-          <h2>"{quote}"</h2>
-          <p>&mdash; {character}</p>
-          <div className="buttons">
-            <button
-              style={{
-                backgroundColor: liked ? "#1b1b1b" : "#ffd90f",
-                color: liked ? "#ff6d90" : "initial",
-              }}
-              onClick={() => onLikeClick(id)}
-            >
-              {liked ? "Unlike" : "Like"}
-            </button>
-            <button onClick={() => onDeleteItem(id)}>Delete</button>
-          </div>
-        </div>
-        <div className="character-img">
-          <img src={image} alt={character} />
-        </div>
+        <QuoteDetails
+          simpsons={props}
+          liked={liked}
+          onDeleteItem={onDeleteItem}
+          onLikeClick={onLikeClick}
+        />
+        <QuoteImage simpsons={props} />
       </div>
     );
   }
@@ -48,25 +38,13 @@ const QuoteCard = (props) => {
       key={id}
       style={{ backgroundColor: liked ? "palevioletred" : "steelblue" }}
     >
-      <div>
-        <img src={image} alt={character} />
-      </div>
-      <div className="quote-details">
-        <h2>"{quote}"</h2>
-        <p>&mdash; {character}</p>
-        <div className="buttons">
-          <button
-            style={{
-              backgroundColor: liked ? "#1b1b1b" : "#ffd90f",
-              color: liked ? "#ff6d90" : "initial",
-            }}
-            onClick={() => onLikeClick(id)}
-          >
-            {liked ? "Unlike" : "Like"}
-          </button>
-          <button onClick={() => onDeleteItem(id)}>Delete</button>
-        </div>
-      </div>
+      <QuoteImage simpsons={props} />
+      <QuoteDetails
+        simpsons={props}
+        liked={liked}
+        onDeleteItem={onDeleteItem}
+        onLikeClick={onLikeClick}
+      />
     </div>
   );
 };
