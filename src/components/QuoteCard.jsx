@@ -15,36 +15,33 @@ const QuoteCard = (props) => {
     display,
   } = props;
 
-  if (characterDirection === "Right") {
-    return (
-      <div
-        className={`card right ${display ? "display" : "hide"}`}
-        key={id}
-        style={{ backgroundColor: liked ? "palevioletred" : "steelblue" }}
-      >
-        <QuoteDetails
-          simpsons={props}
-          liked={liked}
-          onDeleteItem={onDeleteItem}
-          onLikeClick={onLikeClick}
-        />
-        <QuoteImage simpsons={props} />
-      </div>
-    );
-  }
   return (
     <div
-      className={`card left ${display ? "display" : "hide"}`}
+      className={`card ${characterDirection} ${display ? "display" : "hide"}`}
       key={id}
       style={{ backgroundColor: liked ? "palevioletred" : "steelblue" }}
     >
-      <QuoteImage simpsons={props} />
-      <QuoteDetails
-        simpsons={props}
-        liked={liked}
-        onDeleteItem={onDeleteItem}
-        onLikeClick={onLikeClick}
-      />
+      {characterDirection === "Right" ? (
+        <>
+          <QuoteDetails
+            simpsons={props}
+            liked={liked}
+            onDeleteItem={onDeleteItem}
+            onLikeClick={onLikeClick}
+          />
+          <QuoteImage image={image} character={character} />
+        </>
+      ) : (
+        <>
+          <QuoteImage image={image} character={character} />
+          <QuoteDetails
+            simpsons={props}
+            liked={liked}
+            onDeleteItem={onDeleteItem}
+            onLikeClick={onLikeClick}
+          />
+        </>
+      )}
     </div>
   );
 };
